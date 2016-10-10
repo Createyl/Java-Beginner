@@ -1,0 +1,113 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+class RectangleFrame extends JFrame implements ActionListener//界面加载监听器
+{
+ //1.声明所需要的组件和容器
+ JLabel lab = new JLabel("请输入两边长");
+ 
+ JButton btnGrith = new JButton("周长");
+ JButton btnArea = new JButton("面积");
+ 
+ JTextField tfa = new JTextField(5);
+ JTextField tfb = new JTextField(5);
+ 
+ JTextField tfGrith = new JTextField(5);
+ JTextField tfArea = new JTextField(5);
+ 
+ Container cp = this.getContentPane();
+ 
+ //2.构造函数里的初始化界面
+ 
+ RectangleFrame()
+ {
+  //设置窗体的标题栏
+  super("长方形测试窗体");
+   //this.setTitle("三角形窗体")
+  
+  //设置容器的布局方式
+  cp.setLayout(new GridLayout(7,2,10,10));
+  
+  
+  
+  //按照顺序加载组件
+  cp.add(lab);
+  cp.add(tfa);
+  cp.add(tfb);
+  cp.add(btnGrith);
+  cp.add(tfGrith);
+  cp.add(btnArea);
+  cp.add(tfArea);
+  
+  //设置颜色
+  cp.setBackground(Color.CYAN);
+  tfa.setBackground(Color.YELLOW);
+  tfb.setBackground(Color.BLUE);
+  tfGrith.setForeground(Color.BLUE);//设置字体颜色
+  
+    
+  
+  //3.2组件绑定监听器
+  btnGrith.addActionListener(this);//this的用法？
+  btnArea.addActionListener(this);
+  
+  
+  //设置窗体的大小位置
+  this.pack();
+  this.setLocation(300,400);
+  
+ 
+  
+  
+  //设置窗体可见
+  this.setVisible(true);
+ }
+ 
+ public void actionPerformed (ActionEvent e)
+ {
+  if (e.getSource()==btnGrith)//周长
+  {
+    //1.把两边长取回来
+   int a = Integer.parseInt(tfa.getText());
+   int b = Integer.parseInt(tfb.getText());
+  
+   
+   //2.计算面积
+   double grith = 2*(a+b);
+   
+   //3.把面积的值显示出来在对应的文本框内
+   
+   tfGrith.setText(String.valueOf(grith));
+   
+   
+  }
+  if (e.getActionCommand()=="面积")
+  {
+   //1.把两边长取回来
+   int a = Integer.parseInt(tfa.getText());
+   int b = Integer.parseInt(tfb.getText());
+   
+  
+   
+   //2.计算面积
+   double area = a*b;
+   
+   //3.把面积的值显示出来在对应的文本框内
+   
+   tfArea.setText(String.valueOf(area));
+   
+  }
+  
+  
+ }
+ 
+ 
+}
+class RectangleTest
+{
+ public static void main (String args[])
+ {
+  new RectangleFrame();
+ }
+}
+
