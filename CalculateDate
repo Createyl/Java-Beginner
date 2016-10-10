@@ -1,0 +1,84 @@
+import java.io.*;
+import java.util.*;
+class Date{
+ 
+ int year,month,day;
+ 
+ Date(){};
+ 
+ Date(int year,int month,int day){
+  
+  this.year=year;
+  this.month=month;
+  this.day=day;
+  
+  };
+ 
+ void display(){
+  System.out.println(year+" year "+month+" month "+day+" day ");
+  };
+  
+ boolean isLeap(){
+  
+  /*if(year%4==0&&year%100!=0||year%400==0)
+  return 1;
+  else
+  return 0;
+  */
+  
+  return year%4==0&&year%100!=0||year%400==0;//语句正确则返回true,否则false
+  
+  }
+ 
+ boolean isValid(){
+  
+  boolean yTrue,mTrue,dTrue=true;
+  
+  yTrue=year>=0;
+  mTrue=month>=0&&month<=12;
+  
+  switch(month)
+  
+  {
+   case 1:case 3:case 5:case 7:case 8:case 10:case 12:
+   dTrue=day>=0&&day<=31;break;
+   case 4:case 6:case 9:case 11:
+   dTrue=day>=0&&day<=30;break;
+   case 2:
+   if(isLeap())
+   dTrue=day>=0&&day<=29;
+   else
+   dTrue=day>=0&&day<=28;
+  }
+  return yTrue&&mTrue&&dTrue;
+  }
+ 
+ void setDay(){
+  
+  System.out.println("please input the year month day");
+  Scanner ex=new Scanner(System.in);
+  this.year=ex.nextInt();
+  this.month=ex.nextInt();
+  this.day=ex.nextInt();
+ }
+}
+public class UseDate{
+ public static void main(String args[]){
+  
+  Date a=new Date();
+  
+  a.setDay();
+  a.display();
+  
+  if(a.isLeap())
+  System.out.println("闰年");
+  else
+  System.out.println("不是如闰年");
+  
+  if(a.isValid())
+  System.out.println("right");
+  else
+  System.out.println("unright");
+  
+  }
+ }
