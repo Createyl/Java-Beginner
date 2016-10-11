@@ -5,44 +5,56 @@ import javax.swing.*;
 
 class TestFrame extends JFrame implements ActionListener,ItemListener
 {
-	JLabel labSex = new JLabel ("ĞÔ±ğ");
-	JLabel labBirthday = new JLabel("ÉúÈÕ");
-	JLabel labYear = new JLabel("Äê");
-	JLabel labMonth = new JLabel("ÔÂ");
-	JLabel labDay = new JLabel("ÈÕ");
+	JLabel labSex = new JLabel ("æ€§åˆ«");//label for identify the item 
+	JLabel labBirthday = new JLabel("ç”Ÿæ—¥");
+	JLabel labYear = new JLabel("å¹´");
+	JLabel labMonth = new JLabel("æœˆ");
+	JLabel labDay = new JLabel("æ—¥");
+	JLabel labNative = new JLabel("ç±è´¯");
 	
-	JButton btnOk = new JButton ("È·¶¨");
-	JTextArea ta = new JTextArea(3,10);
 	
-	JRadioButton rbtnMale = new JRadioButton("ÄĞ",true);
-	JRadioButton rbtnFemale = new JRadioButton ("Å®");
+	JButton btnOk = new JButton ("ç¡®å®š");//create a button
+	JTextArea ta = new JTextArea(3,30);//also set the area of "btnOk"button
 	
-	JComboBox<Integer> cmbYear = new JComboBox<Integer>();
+	JRadioButton rbtnMale = new JRadioButton("ç”·",true);//RadioButton,you can only chose one option at the same time
+	JRadioButton rbtnFemale = new JRadioButton ("å¥³");//while the value is "true",it would be the default option
 	
-	JComboBox<Integer> cmbMonth = new JComboBox<Integer>();
-	JComboBox<Integer> cmbDay = new JComboBox<Integer>();
+	JComboBox cmbYear = new JComboBox();//ç»„åˆæ¡†-combobox,create a drop-down menu
+	JComboBox cmbMonth = new JComboBox();
+	JComboBox cmbDay = new JComboBox();
+	JComboBox cmbNative = new JComboBox();
 	
-	JPanel panel1 = new JPanel();
+	JPanel panel1 = new JPanel();//combine differnt elements such as JLabel and JButton
 	JPanel panel2 = new JPanel();
 	JPanel panel3 = new JPanel();
+	//JPanel panel4 = new JPanel();
 	
 	Container cp;// = frame.getContentPane();
 	
-	TestFrame ()
+	
+	TestFrame ()//overloaded function
 	{
 		cp = this.getContentPane();
-		this.setTitle("²âÊÔ´°Ìå");
-		panel1.setLayout(new GridLayout(1,3,10,10));
-		panel1.add(labSex);
+		this.setTitle("æµ‹è¯•çª—ä½“");
 		
-		ButtonGroup group = new ButtonGroup();
-		group.add(rbtnMale);
+		//panel1
+		panel1.setLayout(new GridLayout(1,3,10,10));//set the layout of panel 1
+		panel1.add(labSex);// add the label-labsex(æ€§åˆ«) into the panel
+		
+		
+		ButtonGroup group = new ButtonGroup();//This class is used to create a multiple-exclusion scope for a set of buttons. 
+											  //Creating a set of buttons with the same ButtonGroup object means that turning 
+											  //"on" one of those buttons turns off all other buttons in the group. 
+		group.add(rbtnMale);//add button-rbtnMale"ç”·" into the group so that it can be use as radio-button
 		group.add(rbtnFemale);
 		
 		panel1.add(rbtnMale);
 		panel1.add(rbtnFemale);
 		
-		for (int i=1990;i<2100;i++)
+		
+		//panel2
+		
+		for (int i=1990;i<2100;i++)//add the options into the comboBox
 		cmbYear.addItem(i);
 		
 		for (int i=1;i<=12;i++)
@@ -51,6 +63,12 @@ class TestFrame extends JFrame implements ActionListener,ItemListener
 		for (int i=1;i<=31;i++)
 		cmbDay.addItem(i);
 		
+//		String[] NativeList = new String[5];//create a space to store 5 elements
+//		NativeList[0] = å¹¿ä¸œ;//diretly assign the first element of the array
+		
+		String[] NativeList = {"å¹¿ä¸œ","åŒ—äº¬","ä¸Šæµ·"};
+		for (int i=0;i<=2;i++)
+		cmbNative.addItem(NativeList[i]);
 		
 		panel2.setLayout(new GridLayout(1,7));
 		panel2.add(labBirthday);
@@ -60,32 +78,37 @@ class TestFrame extends JFrame implements ActionListener,ItemListener
 		panel2.add(labMonth);
 		panel2.add(cmbDay);
 		panel2.add(labDay);
+		panel2.add(labNative);
+		panel2.add(cmbNative); 
 		
+		
+		//panel3
 		panel3.setLayout(new GridLayout(1,2));
 		panel3.add(btnOk);
 		panel3.add(ta);
 		
 		cp.setLayout(new FlowLayout());
-		cp.add(panel1);
+		cp.add(panel1);//loaded the components in order
 		cp.add(panel2);
 		cp.add(panel3);
 		
-		rbtnMale.addActionListener(this);
+		rbtnMale.addActionListener(this);//monitor of the action
 		rbtnFemale.addActionListener(this);
 		btnOk.addActionListener(this);
 		
-		cmbYear.addItemListener(this);
+		cmbYear.addItemListener(this);//monitor of the action
 		cmbMonth.addItemListener(this);
+		cmbDay.addItemListener(this);
 		this.pack();
 		this.setLocation(200,300);
 		this.setVisible(true);
 	}
 	
-	public void itemStateChanged(ItemEvent e)
+	public void itemStateChanged(ItemEvent e)//to change the
 	{
 		if (e.getSource()==cmbYear||e.getSource()==cmbMonth)
 		{
-			int month = (int)cmbMonth.getSelectedItem();
+			int month = cmbMonth.getSelectedIndex();
 			switch (month)
 			{
 				case 1: case 3:case 5: case 7: case 8: case 10:case 12:
@@ -100,7 +123,7 @@ class TestFrame extends JFrame implements ActionListener,ItemListener
 				break;
 				case 2:
 				cmbDay.removeAllItems();
-				int year = (int)cmbYear.getSelectedItem();
+				int year = cmbYear.getSelectedIndex();
 				if (year%4==0&&year%100!=0||year%400==0)
 					for (int i=1;i<=29;i++)
 						cmbDay.addItem(i);
@@ -116,20 +139,20 @@ class TestFrame extends JFrame implements ActionListener,ItemListener
 	{
 		if (e.getSource()==btnOk)
 		{
-			String str = "ĞÔ±ğÊÇ£º";
+			String str = "æ€§åˆ«æ˜¯ï¼š";
 			String sex ="";
 			if (rbtnMale.isSelected())
-				sex ="ÄĞ\r\n";
+				sex ="ç”·\r\n";
 			if (rbtnFemale.isSelected())
-				sex ="Å®\r\n";
+				sex ="å¥³\r\n";
 			
 			str += sex;
 			
-			int year = (int)cmbYear.getSelectedItem();
-			int month = (int)cmbMonth.getSelectedItem();
-			int day = (int)cmbDay.getSelectedItem();
+			int year = cmbYear.getSelectedIndex()+1990;
+			int month = cmbMonth.getSelectedIndex()+1;
+			int day = cmbDay.getSelectedIndex()+1;
 			
-			str += "³öÉúÈÕÆÚ:"+ year+"Äê"+month+"ÔÂ"+day+"ÈÕ";
+			str += "å‡ºç”Ÿæ—¥æœŸ:"+year+"å¹´"+month+"æœˆ"+day+"æ—¥";
 				
 			ta.setText(str);
 		}
